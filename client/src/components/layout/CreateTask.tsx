@@ -1,12 +1,13 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { ITask } from "../../types";
 import { useCreateTaskMutation } from "../../store/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export type CreateTaskForm = Omit<ITask, "createdAt" | "updatedAt" | "status">;
 
 function CreateTask() {
+  const [type, setType] = useState(false);
   const [createTask, { isSuccess, isLoading }] = useCreateTaskMutation();
   const { register, handleSubmit } = useForm<CreateTaskForm>();
   const submit: SubmitHandler<CreateTaskForm> = (data) => {
@@ -21,6 +22,7 @@ function CreateTask() {
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-col">
       <div className="mb-5.5 ">
+        <h1>Create</h1>
         <label
           className="block font-bold text-[12px] mb-2 text-[#CED2DB]"
           htmlFor=""

@@ -25,6 +25,7 @@ function Tasks() {
               <button onClick={() => deleteTask(_id)} className="bg-red-500">
                 -
               </button>
+              <button>edit</button>
             </td>
           </tr>
         ))}
