@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { api } from "./api";
+import filterSlice from "./slices/filterSlice";
 
 export const store = configureStore({
   reducer: {
+    filters: filterSlice,
     [api.reducerPath]: api.reducer,
   },
   middleware(getDefaultMiddleware) {
