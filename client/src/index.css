@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap");
+@import "tailwindcss";
+:root {
+  --prime: #6bc2bb;
+}
+body {
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+}
+.container {
+  max-width: 1670px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+::-webkit-scrollbar {
+  display: none;
+}
