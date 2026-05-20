@@ -1,7 +1,12 @@
+import { useDebounce } from "../../hooks/useDebounce";
+import { useFilters } from "../../hooks/useFilters";
 import { useDeleteTaskMutation, useGetTasksQuery } from "../../store/api";
 
 function Tasks() {
-  const { data: tasks } = useGetTasksQuery();
+  const { searchValue } = useFilters();
+  const { data: tasks } = useGetTasksQuery({
+    title: useDebounce(searchValue),
+  });
   const [deleteTask] = useDeleteTaskMutation();
   return (
     <table className="w-full">

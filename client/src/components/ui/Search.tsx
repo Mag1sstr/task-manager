@@ -1,8 +1,16 @@
+import { useFilters } from "../../hooks/useFilters";
+import { setSearchValue } from "../../store/slices/filterSlice";
+import { useAppDispatch } from "../../store/store";
+
 function Search() {
+  const dispatch = useAppDispatch();
+  const { searchValue } = useFilters();
   return (
     <div className="flex gap-8.75 mb-13.25">
       <div className="max-w-[362px] w-full border border-[#9EA5B8] flex items-center py-3 pl-10 rounded-[37px]">
         <input
+          value={searchValue}
+          onChange={(e) => dispatch(setSearchValue(e.target.value))}
           type="text"
           className="w-full placeholder:text-[#9EA5B8] text-[18px] outline-none"
           placeholder="Search"

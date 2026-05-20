@@ -8,9 +8,10 @@ export const api = createApi({
   tagTypes: ["tasks"],
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2222/api" }),
   endpoints: (builder) => ({
-    getTasks: builder.query<ITask[], void>({
-      query: () => ({
+    getTasks: builder.query<ITask[], Partial<ITask>>({
+      query: (params) => ({
         url: "/tasks",
+        params,
       }),
       providesTags: ["tasks"],
     }),
