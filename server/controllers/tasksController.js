@@ -1,7 +1,12 @@
 import { Task } from "../models/TaskModel.js";
 
-export const getTasks = async (_, res) => {
-  const tasks = await Task.find();
+export const getTasks = async (req, res) => {
+  let filters = {};
+  const { title } = req.query;
+  if (title) {
+    filters.title = { $regex: title, $options: "i" };
+  }
+  const tasks = await Task.find(filters);
   res.json(tasks);
 };
 
