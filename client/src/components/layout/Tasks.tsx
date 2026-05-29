@@ -1,6 +1,11 @@
+import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useFilters } from "../../hooks/useFilters";
-import { useDeleteTaskMutation, useGetTasksQuery } from "../../store/api";
+import {
+  useDeleteTaskMutation,
+  useGetTasksQuery,
+  useUpdateTaskMutation,
+} from "../../store/api";
 import type { StatusType } from "../../types";
 
 function Tasks() {
@@ -8,7 +13,9 @@ function Tasks() {
   const { data: tasks } = useGetTasksQuery({
     title: useDebounce(searchValue),
   });
+  const [editId, setEditId] = useState<null | string>(null);
   const [deleteTask] = useDeleteTaskMutation();
+  const [updateTask, { isSuccess: isUpdateSuccess }] = useUpdateTaskMutation();
 
   const statusConfig: Record<StatusType, { text: string; styles: string }> = {
     done: {
@@ -32,6 +39,12 @@ function Tasks() {
       styles: "bg-[#4070F4]/20 border-[#4070F4] text-[#4070F4]",
     },
   };
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      alert("Статус обновлен");
+      setEditId(null);
+    }
+  }, [isUpdateSuccess]);
 
   return (
     <table className="w-full">
@@ -47,16 +60,30 @@ function Tasks() {
         {tasks?.map(({ title, status, createdAt, _id }) => (
           <tr key={_id} className="pb-4 ">
             <td
-              className={`relative border inline-block py-1 p-3 min-w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[status].styles || ""}`}
+              onClick={() => setEditId((prev) => (prev === _id ? null : _id))}
+              className={`relative border  inline-block py-1 p-3 min-w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[status].styles || ""}`}
             >
-              <div className="absolute py-2 bg-zinc-100 shadow-2xl rounded-lg w-40 top-full left-0 mt-1 z-10">
-                <p>Change status:</p>
-                {Object.entries(statusConfig).map(([key, v]) => (
-                  <div key={key} className="p-3 hover:bg-zinc-200 text-[14px]">
-                    {v.text}
-                  </div>
-                ))}
-              </div>
+              {editId === _id && (
+                <div className="absolute py-2 bg-zinc-100 shadow-2xl rounded-lg w-40 top-full left-0 mt-1 z-10">
+                  <p>Change status:</p>
+                  {Object.entries(statusConfig).map(([key, v]) => (
+                    <div
+                      key={key}
+                      onClick={() => {
+                        updateTask({
+                          _id,
+                          body: {
+                            status: key as StatusType,
+                          },
+                        });
+                      }}
+                      className="p-3 hover:bg-zinc-200 text-[14px] cursor-pointer"
+                    >
+                      {v.text}
+                    </div>
+                  ))}
+                </div>
+              )}
               {statusConfig[status].text}
             </td>
             <td>{title}</td>

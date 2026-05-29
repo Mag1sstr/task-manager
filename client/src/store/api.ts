@@ -29,9 +29,9 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    updateTask: builder.mutation<ITask, { id: number; body: ITask }>({
-      query: ({ id, body }) => ({
-        url: `/tasks/${id}`,
+    updateTask: builder.mutation<ITask, { _id: string; body: Partial<ITask> }>({
+      query: ({ _id, body }) => ({
+        url: `/tasks/${_id}`,
         body,
         method: "PUT",
       }),
