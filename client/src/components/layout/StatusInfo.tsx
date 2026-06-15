@@ -27,11 +27,7 @@ function StatusInfo() {
 
   return (
     <ul className="flex gap-2.5 mb-15">
-      <StatusItem type={"new"} count={info.new.length} />
-      <li
-        onClick={() => dispatch(setStatusType("new"))}
-        className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]"
-      >
+      <StatusItem type={"new"} count={info.new.length}>
         <svg
           width="58"
           height="58"
@@ -47,14 +43,8 @@ function StatusInfo() {
             fill="white"
           />
         </svg>
-        <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">{info.new.length}</strong> new
-        </p>
-      </li>
-      <li
-        onClick={() => dispatch(setStatusType("in_progress"))}
-        className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]"
-      >
+      </StatusItem>
+      <StatusItem type={"in_progress"} count={info.in_progress.length}>
         <svg
           width="58"
           height="58"
@@ -70,16 +60,8 @@ function StatusInfo() {
             fill="white"
           />
         </svg>
-
-        <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">{info.in_progress.length}</strong> in
-          progress
-        </p>
-      </li>
-      <li
-        onClick={() => dispatch(setStatusType("done"))}
-        className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]"
-      >
+      </StatusItem>
+      <StatusItem type={"done"} count={info.done.length}>
         <svg
           width="58"
           height="58"
@@ -93,15 +75,8 @@ function StatusInfo() {
             fill="white"
           />
         </svg>
-
-        <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">{info.confirmed.length}</strong> done
-        </p>
-      </li>
-      <li
-        onClick={() => dispatch(setStatusType("cancelled"))}
-        className={`flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A] ${taskStatus}`}
-      >
+      </StatusItem>
+      <StatusItem type={"cancelled"} count={info.new.length}>
         <svg
           width="58"
           height="58"
@@ -115,12 +90,7 @@ function StatusInfo() {
             fill="white"
           />
         </svg>
-
-        <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">{info.cancelled.length}</strong>{" "}
-          errors
-        </p>
-      </li>
+      </StatusItem>
     </ul>
   );
 }
