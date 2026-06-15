@@ -9,7 +9,7 @@ import {
 import type { StatusType } from "../../types";
 
 function Tasks() {
-  const { searchValue } = useFilters();
+  const { searchValue, taskStatus } = useFilters();
   const { data: tasks } = useGetTasksQuery({
     title: useDebounce(searchValue),
   });
@@ -57,47 +57,49 @@ function Tasks() {
         </tr>
       </thead>
       <tbody>
-        {tasks?.map(({ title, status, createdAt, _id }) => (
-          <tr key={_id} className="pb-4 ">
-            <td
-              onClick={() => setEditId((prev) => (prev === _id ? null : _id))}
-              className={`relative border  inline-block py-1 p-3 min-w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[status].styles || ""}`}
-            >
-              {editId === _id && (
-                <div className="absolute py-2 bg-zinc-100 shadow-2xl rounded-lg w-40 top-full left-0 mt-1 z-10">
-                  <p>Change status:</p>
-                  {Object.entries(statusConfig).map(([key, v]) => (
-                    <div
-                      key={key}
-                      onClick={() => {
-                        updateTask({
-                          _id,
-                          body: {
-                            status: key as StatusType,
-                          },
-                        });
-                      }}
-                      className="p-3 hover:bg-zinc-200 text-[14px] cursor-pointer"
-                    >
-                      {v.text}
-                    </div>
-                  ))}
-                </div>
-              )}
-              {statusConfig[status].text}
-            </td>
-            <td>{title}</td>
-            <td>
-              {new Date(createdAt).toLocaleDateString().replaceAll(".", "-")}
-            </td>
-            <td>
-              <button onClick={() => deleteTask(_id)} className="bg-red-500">
-                -
-              </button>
-              <button>edit</button>
-            </td>
-          </tr>
-        ))}
+        {tasks
+          ?.filter((el) => (taskStatus ? el.status === taskStatus : el))
+          .map(({ title, status, createdAt, _id }) => (
+            <tr key={_id} className="pb-4 ">
+              <td
+                onClick={() => setEditId((prev) => (prev === _id ? null : _id))}
+                className={`relative border  inline-block py-1 p-3 min-w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[status].styles || ""}`}
+              >
+                {editId === _id && (
+                  <div className="absolute py-2 bg-zinc-100 shadow-2xl rounded-lg w-40 top-full left-0 mt-1 z-10">
+                    <p>Change status:</p>
+                    {Object.entries(statusConfig).map(([key, v]) => (
+                      <div
+                        key={key}
+                        onClick={() => {
+                          updateTask({
+                            _id,
+                            body: {
+                              status: key as StatusType,
+                            },
+                          });
+                        }}
+                        className="p-3 hover:bg-zinc-200 text-[14px] cursor-pointer"
+                      >
+                        {v.text}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {statusConfig[status].text}
+              </td>
+              <td>{title}</td>
+              <td>
+                {new Date(createdAt).toLocaleDateString().replaceAll(".", "-")}
+              </td>
+              <td>
+                <button onClick={() => deleteTask(_id)} className="bg-red-500">
+                  -
+                </button>
+                <button>edit</button>
+              </td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

@@ -1,7 +1,37 @@
+import { useFilters } from "../../hooks/useFilters";
+import { useGetTasksQuery } from "../../store/api";
+import { setStatusType } from "../../store/slices/filterSlice";
+import { useAppDispatch } from "../../store/store";
+import type { ITask, StatusType } from "../../types";
+import StatusItem from "./StatusItem";
+
 function StatusInfo() {
+  const { data } = useGetTasksQuery({});
+  const { taskStatus } = useFilters();
+  const dispatch = useAppDispatch();
+
+  const info = (data ?? []).reduce<Record<StatusType, ITask[]>>(
+    (acc, el) => {
+      const key = el.status;
+      acc[key].push(el);
+      return acc;
+    },
+    {
+      cancelled: [],
+      confirmed: [],
+      done: [],
+      in_progress: [],
+      new: [],
+    },
+  );
+
   return (
     <ul className="flex gap-2.5 mb-15">
-      <li className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]">
+      <StatusItem type={"new"} count={info.new.length} />
+      <li
+        onClick={() => dispatch(setStatusType("new"))}
+        className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]"
+      >
         <svg
           width="58"
           height="58"
@@ -18,10 +48,13 @@ function StatusInfo() {
           />
         </svg>
         <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">38</strong> new
+          <strong className="text-[42px]">{info.new.length}</strong> new
         </p>
       </li>
-      <li className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]">
+      <li
+        onClick={() => dispatch(setStatusType("in_progress"))}
+        className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]"
+      >
         <svg
           width="58"
           height="58"
@@ -39,10 +72,14 @@ function StatusInfo() {
         </svg>
 
         <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">11</strong> in progress
+          <strong className="text-[42px]">{info.in_progress.length}</strong> in
+          progress
         </p>
       </li>
-      <li className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]">
+      <li
+        onClick={() => dispatch(setStatusType("done"))}
+        className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]"
+      >
         <svg
           width="58"
           height="58"
@@ -58,10 +95,13 @@ function StatusInfo() {
         </svg>
 
         <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">38</strong> done
+          <strong className="text-[42px]">{info.confirmed.length}</strong> done
         </p>
       </li>
-      <li className="flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A]">
+      <li
+        onClick={() => dispatch(setStatusType("cancelled"))}
+        className={`flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A] ${taskStatus}`}
+      >
         <svg
           width="58"
           height="58"
@@ -77,7 +117,8 @@ function StatusInfo() {
         </svg>
 
         <p className="text-[14px] text-[#858FA6]">
-          <strong className="text-[42px]">38</strong> errors
+          <strong className="text-[42px]">{info.cancelled.length}</strong>{" "}
+          errors
         </p>
       </li>
     </ul>
