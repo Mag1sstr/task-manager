@@ -7,9 +7,8 @@ interface IProps {
   type: StatusType | null;
   children: ReactNode;
   onClick?: () => void;
-  index?: number;
 }
-function StatusItem({ count, type, children, onClick, index = 0 }: IProps) {
+function StatusItem({ count, type, children, onClick }: IProps) {
   const { taskStatus } = useFilters();
   const names = {
     cancelled: "errors",

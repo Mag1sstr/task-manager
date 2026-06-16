@@ -157,7 +157,6 @@ function StatusInfo() {
             count={v}
             type={key as StatusType}
             key={key}
-            index={i}
           >
             {ICONS[key as StatusType].icon}
           </StatusItem>
