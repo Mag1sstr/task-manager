@@ -8,8 +8,9 @@ interface IProps {
   count: number;
   type: StatusType | null;
   children: ReactNode;
+  onClick?: () => void;
 }
-function StatusItem({ count, type, children }: IProps) {
+function StatusItem({ count, type, children, onClick }: IProps) {
   const dispatch = useAppDispatch();
   const { taskStatus } = useFilters();
   const names = {
@@ -19,10 +20,11 @@ function StatusItem({ count, type, children }: IProps) {
     in_progress: "in progress",
     new: "new",
   };
+  const isHas = taskStatus.some((el) => el === type);
   return (
     <li
-      onClick={() => dispatch(setStatusType(taskStatus === type ? null : type))}
-      className={`flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A] ${taskStatus === type && "outline-2 outline-blue-500"}`}
+      onClick={onClick}
+      className={`flex-1 py-6.5 px-4.5 rounded-[10px] flex items-center gap-4.5 shadow-[0px_4px_8px_0px_#0B1F4D1A] ${isHas && "outline-2 outline-blue-500"}`}
     >
       {children}
 
