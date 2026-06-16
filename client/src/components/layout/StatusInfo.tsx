@@ -143,7 +143,7 @@ function StatusInfo() {
 
   return (
     <ul className="flex gap-2.5 mb-15">
-      {Object.entries(STATUSED).map(([key, v]) => {
+      {Object.entries(STATUSED).map(([key, v], i) => {
         const isHas = taskStatus.some((el) => el === key);
         return (
           <StatusItem
@@ -157,6 +157,7 @@ function StatusInfo() {
             count={v}
             type={key as StatusType}
             key={key}
+            index={i}
           >
             {ICONS[key as StatusType].icon}
           </StatusItem>
