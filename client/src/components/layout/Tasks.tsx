@@ -7,6 +7,7 @@ import {
   useUpdateTaskMutation,
 } from "../../store/api";
 import type { StatusType } from "../../types";
+import HighlightText from "../ui/HighlightText";
 
 function Tasks() {
   const { searchValue, taskStatus } = useFilters();
@@ -95,7 +96,9 @@ function Tasks() {
                 )}
                 {statusConfig[status].text}
               </td>
-              <td>{title}</td>
+              <td>
+                <HighlightText text={title} />
+              </td>
               <td>
                 {new Date(createdAt).toLocaleDateString().replaceAll(".", "-")}
               </td>
