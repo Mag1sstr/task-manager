@@ -1,3 +1,5 @@
+import Profile from "../ui/Profile";
+
 function Header() {
   return (
     <header className="flex items-center justify-between mb-5.75">
@@ -42,17 +44,7 @@ function Header() {
           </svg>
         </button>
       </div>
-      <div className="flex items-center">
-        <div className="flex flex-col items-end mr-3 font-bold">
-          <p className="text-[#858FA6]">Hi, Paulo Mota</p>
-          <p className="text-[14px]  text-[#F03D3D] cursor-pointer">Logout</p>
-        </div>
-        <img
-          className="w-13.25 h-13.25 rounded-full object-cover"
-          src="/a.png"
-          alt="avatar"
-        />
-      </div>
+      <Profile />
     </header>
   );
 }
