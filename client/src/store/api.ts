@@ -5,7 +5,7 @@ import type { CreateTaskForm } from "../components/layout/CreateTask";
 
 export const api = createApi({
   reducerPath: "api",
-  tagTypes: ["tasks"],
+  tagTypes: ["tasks", "users"],
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2222/api" }),
   endpoints: (builder) => ({
     getTasks: builder.query<ITask[], Partial<ITask>>({
@@ -37,6 +37,27 @@ export const api = createApi({
       }),
       invalidatesTags: ["tasks"],
     }),
+    getUser: builder.query<
+      { username: string; password: string },
+      { username: string; password: string }
+    >({
+      query: (params) => ({
+        url: "/users",
+        params,
+      }),
+      providesTags: ["users"],
+    }),
+    createUser: builder.mutation<
+      { username: string; password: string },
+      { username: string; password: string }
+    >({
+      query: (body) => ({
+        url: "/users",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
@@ -45,4 +66,6 @@ export const {
   useCreateTaskMutation,
   useDeleteTaskMutation,
   useUpdateTaskMutation,
+  useCreateUserMutation,
+  useGetUserQuery,
 } = api;

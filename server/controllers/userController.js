@@ -2,11 +2,7 @@ import UserModel from "../models/UserModel.js";
 
 export const getUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = UserModel.find({
-      username,
-      password,
-    });
+    const user = await UserModel.find(req.query);
 
     res.json(user);
   } catch (error) {
