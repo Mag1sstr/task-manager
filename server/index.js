@@ -4,12 +4,15 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import tasksRouter from "./routes/tasksRoute.js";
+import userRoute from "./routes/userRoute.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
 app.use("/api/tasks", tasksRouter);
+app.use("/api/users", userRoute);
 
 async function startApp() {
   try {
