@@ -1,0 +1,98 @@
+import { Eye, EyeOff } from "lucide-react";
+import { useEffect, useState } from "react";
+interface IProps {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: "text" | "password";
+}
+function InputPassword({ label, value, onChange, type }: IProps) {
+  const [isCorrectPass, setIsCorrectPass] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+  const hasNumber = [...value].some(
+    (el) => el !== " " && Number.isInteger(+el),
+  );
+  const hasSymbol = /[^a-zA-Z0-9\s]/.test(value);
+
+  const hasUpper = /[A-Z]/.test(value);
+
+  const hasCorrectLength = value.length >= 8;
+
+  useEffect(() => {
+    setIsCorrectPass(hasCorrectLength && hasNumber && hasUpper && hasSymbol);
+  }, [value]);
+  return (
+    <div className="relative">
+      <label
+        className="text-[#6BC2BB] text-[18px] absolute left-5.75 top-0 -translate-y-1/2 bg-white px-1.5 z-10"
+        htmlFor="field"
+      >
+        {label}
+      </label>
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        type={showPass ? "text" : "password"}
+        className="border border-[#6BC2BB] rounded-md text-[18px] font-medium text-[#858FA6] py-5.5 px-4 outline-none w-full pr-12"
+        id="field"
+      />
+      <button
+        onClick={() => setShowPass(!showPass)}
+        className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
+      >
+        {showPass ? <Eye color="#9EA5B8" /> : <EyeOff color="#9EA5B8" />}
+      </button>
+
+      <div
+        className={`absolute left-full top-1/2 -translate-y-1/2 w-[243px] px-7.5 py-3 ml-6.75 bg-white border-2 ${isCorrectPass ? "border-[#0BB07B]" : "border-[#F03D3D]"} `}
+      >
+        <ul>
+          <li className="flex items-center gap-2.25 font-light text-[18px] text-[#B6BCC9]">
+            {hasCorrectLength ? (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.4999 6.99992C14.8904 7.39044 14.8904 8.02364 14.4999 8.41414L9.70702 13.207C9.31652 13.5975 8.68332 13.5975 8.29282 13.207L5.99992 10.9141C5.6094 10.5236 5.6094 9.89044 5.99992 9.49994C6.39045 9.10944 7.02361 9.10944 7.41414 9.49994L8.99992 11.0857L13.0857 6.99992C13.1345 6.9511 13.1871 6.90839 13.2426 6.87178C13.6307 6.6155 14.1582 6.65821 14.4999 6.99992Z"
+                  fill="#0BB07B"
+                />
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10ZM18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10Z"
+                  fill="#0BB07B"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.49993 6.49992C6.89045 6.1094 7.52362 6.1094 7.91414 6.49992L9.99997 8.58572L12.0857 6.49992C12.4763 6.1094 13.1094 6.1094 13.5 6.49992C13.8905 6.89045 13.8905 7.52361 13.5 7.91414L11.4142 9.99992L13.5 12.0857C13.8905 12.4762 13.8905 13.1094 13.5 13.4999C13.1094 13.8904 12.4763 13.8904 12.0857 13.4999L9.99997 11.4141L7.91413 13.4999C7.52361 13.8904 6.89045 13.8904 6.49992 13.4999C6.1094 13.1094 6.1094 12.4762 6.49992 12.0857L8.58567 9.99992L6.49993 7.91414C6.1094 7.52361 6.1094 6.89045 6.49993 6.49992Z"
+                  fill="#F03D3D"
+                />
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M20.0001 10C20.0001 15.5228 15.5229 20 10 20C4.47716 20 0 15.5228 0 10C0 4.47715 4.47716 0 10 0C15.5229 0 20.0001 4.47715 20.0001 10ZM18.0001 10C18.0001 14.4183 14.4182 18 10 18C5.58173 18 2 14.4183 2 10C2 5.58172 5.58173 2 10 2C14.4182 2 18.0001 5.58172 18.0001 10Z"
+                  fill="#F03D3D"
+                />
+              </svg>
+            )}
+            8 characters
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default InputPassword;

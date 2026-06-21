@@ -1,5 +1,6 @@
 import { useState } from "react";
 import InputField from "../ui/InputField";
+import InputPassword from "../ui/InputPassword";
 
 function AuthModal() {
   const [form, setForm] = useState({
@@ -35,7 +36,7 @@ function AuthModal() {
       <div className="p-6 bg-white rounded-2xl w-[484px]">
         <div className="flex flex-col gap-5.5">
           <InputField value={form.username} label="Username" />
-          <InputField
+          <InputPassword
             value={form.password}
             onChange={(value) =>
               setForm((prev) => ({ ...prev, password: value }))
