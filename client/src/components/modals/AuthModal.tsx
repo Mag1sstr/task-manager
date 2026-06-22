@@ -3,6 +3,7 @@ import InputField from "../ui/InputField";
 import InputPassword from "../ui/InputPassword";
 
 function AuthModal() {
+  const [isValid, setIsValid] = useState(false);
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -34,17 +35,29 @@ function AuthModal() {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 ">
       <div className="p-6 bg-white rounded-2xl w-[484px]">
-        <div className="flex flex-col gap-5.5">
-          <InputField value={form.username} label="Username" />
+        <div className="flex flex-col gap-5.5 mb-5">
+          <InputField
+            value={form.username}
+            onChange={(value) =>
+              setForm((prev) => ({ ...prev, username: value }))
+            }
+            label="Username"
+          />
           <InputPassword
             value={form.password}
             onChange={(value) =>
               setForm((prev) => ({ ...prev, password: value }))
             }
+            onPasswordValid={setIsValid}
             label="Password"
-            type="password"
           />
         </div>
+        <button
+          disabled={!isValid}
+          className="font-bold text-white py-6 bg-[#6BC2BB] rounded-md w-full cursor-pointer transition-all disabled:cursor-not-allowed disabled:bg-[#E7E9ED] disabled:text-[#9EA5B8]"
+        >
+          Login
+        </button>
       </div>
     </div>
   );
