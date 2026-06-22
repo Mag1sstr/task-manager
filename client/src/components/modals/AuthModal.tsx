@@ -37,9 +37,13 @@ function AuthModal({ open, setOpen }: IProps) {
 
   return (
     <div
-      className={`fixed inset-0 bg-black/40 flex items-center justify-center z-50 transition-all duration-300 ${open ? "visible opacity-100" : "invisible opacity-0"} `}
+      className={`fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300 ${open ? "visible opacity-100 [&>div]:mt-0 [&>div]:scale-100" : "invisible opacity-0 [&>div]:mt-3 [&>div]:scale-95"} `}
+      onMouseDown={() => setOpen(false)}
     >
-      <div className="p-6 bg-white rounded-2xl w-[484px]">
+      <div
+        onMouseDown={(e) => e.stopPropagation()}
+        className="p-6 bg-white rounded-2xl w-[484px] transition-all"
+      >
         <div className="flex flex-col gap-5.5 mb-5">
           <InputField
             value={form.username}

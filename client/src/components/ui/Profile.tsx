@@ -16,7 +16,10 @@ function Profile() {
           alt="avatar"
         />
       </div>
-      <div className="p-3 bg-zinc-400" onClick={() => setOpenModal(true)}>
+      <div
+        className="p-3 text-white rounded-2xl bg-blue-500 transition-all shadow-sm hover:bg-blue-600 cursor-pointer hover:inset-shadow-sm inset-shadow-[#555] active:scale-98"
+        onClick={() => setOpenModal(true)}
+      >
         Login
       </div>
       <AuthModal open={openModal} setOpen={setOpenModal} />
