@@ -1,6 +1,8 @@
+import { useState } from "react";
 import AuthModal from "../modals/AuthModal";
 
 function Profile() {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <>
       <div className="flex items-center">
@@ -14,8 +16,10 @@ function Profile() {
           alt="avatar"
         />
       </div>
-      <div className="p-3 bg-zinc-400">Login</div>
-      <AuthModal />
+      <div className="p-3 bg-zinc-400" onClick={() => setOpenModal(true)}>
+        Login
+      </div>
+      <AuthModal open={openModal} setOpen={setOpenModal} />
     </>
   );
 }

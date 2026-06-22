@@ -1,8 +1,11 @@
 import { useState } from "react";
 import InputField from "../ui/InputField";
 import InputPassword from "../ui/InputPassword";
-
-function AuthModal() {
+interface IProps {
+  open: boolean;
+  setOpen: (b: boolean) => void;
+}
+function AuthModal({ open, setOpen }: IProps) {
   const [isValid, setIsValid] = useState(false);
   const [form, setForm] = useState({
     username: "",
@@ -33,7 +36,9 @@ function AuthModal() {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 ">
+    <div
+      className={`fixed inset-0 bg-black/40 flex items-center justify-center z-50 transition-all duration-300 ${open ? "visible opacity-100" : "invisible opacity-0"} `}
+    >
       <div className="p-6 bg-white rounded-2xl w-[484px]">
         <div className="flex flex-col gap-5.5 mb-5">
           <InputField
