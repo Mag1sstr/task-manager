@@ -48,7 +48,7 @@ function InputPassword({ label, value, onChange, onPasswordValid }: IProps) {
       </button>
 
       <div
-        className={`absolute left-full top-1/2 -translate-y-1/2 w-[243px] px-7.5 py-3 ml-6.75 bg-white border-2 ${isCorrectPassword ? "border-[#0BB07B]" : "border-[#F03D3D]"} `}
+        className={`absolute left-full top-1/2 -translate-y-1/2 w-[243px] px-7.5 py-3 ml-6.75 bg-white border-2 transition-all duration-300 ${!!value.length ? "visible opacity-100 scale-100" : "invisible opacity-0 scale-95"} ${isCorrectPassword ? "border-[#0BB07B]" : "border-[#F03D3D]"} `}
       >
         <ul>
           <li className="flex items-center gap-2.25 font-light text-[18px] text-[#B6BCC9]">

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import InputField from "../ui/InputField";
 import InputPassword from "../ui/InputPassword";
+import { useCreateUserMutation } from "../../store/api";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
@@ -11,9 +12,10 @@ function AuthModal({ open, setOpen }: IProps) {
     username: "",
     password: "",
   });
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
+  const [createUser] = useCreateUserMutation();
 
-  if (!isLogin) {
+  if (isLogin) {
     return (
       <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 ">
         <div className="p-6 bg-white rounded-2xl w-[484px]">
@@ -35,12 +37,18 @@ function AuthModal({ open, setOpen }: IProps) {
     );
   }
 
+  const submitReg = (e: FormEvent) => {
+    e.preventDefault();
+    createUser(form);
+  };
+
   return (
     <div
       className={`fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300 ${open ? "visible opacity-100 [&>div]:mt-0 [&>div]:scale-100" : "invisible opacity-0 [&>div]:mt-3 [&>div]:scale-95"} `}
       onMouseDown={() => setOpen(false)}
     >
-      <div
+      <form
+        onSubmit={submitReg}
         onMouseDown={(e) => e.stopPropagation()}
         className="p-6 bg-white rounded-2xl w-[484px] transition-all"
       >
@@ -65,9 +73,9 @@ function AuthModal({ open, setOpen }: IProps) {
           disabled={!isValid}
           className="font-bold text-white py-6 bg-[#6BC2BB] rounded-md w-full cursor-pointer transition-all disabled:cursor-not-allowed disabled:bg-[#E7E9ED] disabled:text-[#9EA5B8]"
         >
-          Login
+          Sign In
         </button>
-      </div>
+      </form>
     </div>
   );
 }
