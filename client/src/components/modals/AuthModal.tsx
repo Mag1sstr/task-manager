@@ -1,7 +1,7 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import InputField from "../ui/InputField";
 import InputPassword from "../ui/InputPassword";
-import { useCreateUserMutation } from "../../store/api";
+import { useCreateUserMutation, useGetUserQuery } from "../../store/api";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
@@ -13,7 +13,7 @@ function AuthModal({ open, setOpen }: IProps) {
     password: "",
   });
   const [isLogin, setIsLogin] = useState(false);
-  const [createUser] = useCreateUserMutation();
+  const [createUser, { data, isSuccess }] = useCreateUserMutation();
 
   if (isLogin) {
     return (
@@ -37,10 +37,14 @@ function AuthModal({ open, setOpen }: IProps) {
     );
   }
 
-  const submitReg = (e: FormEvent) => {
+  const submitReg = async (e: FormEvent) => {
     e.preventDefault();
     createUser(form);
   };
+
+  useEffect(() => {
+    if (isSuccess) console.log(data);
+  }, [isSuccess]);
 
   return (
     <div
