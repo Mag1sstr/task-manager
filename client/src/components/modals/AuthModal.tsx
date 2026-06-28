@@ -46,6 +46,17 @@ function AuthModal({ open, setOpen }: IProps) {
     if (isSuccess) console.log(data);
   }, [isSuccess]);
 
+  useEffect(() => {
+    function closeModal(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("keydown", closeModal);
+
+    return () => document.removeEventListener("keydown", closeModal);
+  }, []);
+
   return (
     <div
       className={`fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300 ${open ? "visible opacity-100 [&>div]:mt-0 [&>div]:scale-100" : "invisible opacity-0 [&>div]:mt-3 [&>div]:scale-95"} `}
