@@ -4,7 +4,7 @@ function Header() {
   return (
     <header className="flex items-center justify-between mb-5.75">
       <h1 className="text-[18px] font-bold text-[#CED2DB] flex-1">Dashboard</h1>
-      <div className="flex gap-4.5 mr-15">
+      <div className="flex gap-4.5 mr-4.5">
         <button>
           <svg
             width="24"
