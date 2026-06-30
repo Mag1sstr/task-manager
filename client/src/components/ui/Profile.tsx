@@ -17,7 +17,7 @@ function Profile() {
         />
       </div>
       <div
-        className="p-3 text-white rounded-2xl bg-blue-500 transition-all shadow-sm hover:bg-blue-600 cursor-pointer hover:inset-shadow-sm inset-shadow-[#555] active:scale-98"
+        className="p-3 text-white rounded-2xl bg-blue-500 transition-all shadow-sm hover:bg-blue-600 cursor-pointer hover:inset-shadow-sm inset-shadow-[#000000]/30 active:scale-98"
         onClick={() => setOpenModal(true)}
       >
         Login

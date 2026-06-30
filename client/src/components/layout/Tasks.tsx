@@ -48,16 +48,14 @@ function Tasks() {
   }, [isUpdateSuccess]);
 
   return (
-    <table className="w-full">
-      <thead>
-        <tr className="flex flex-1 gap-0">
-          <td>Status</td>
-          <td className="flex-1">Title</td>
-          <td>Publish Date</td>
-          <td>Insights</td>
-        </tr>
-      </thead>
-      <tbody>
+    <section className="w-full">
+      <div className="flex px-6.25 pb-5 border-b border-[#CED2DB] mb-6">
+        <div className="w-[94px] mr-14">Status</div>
+        <div className="flex-1">Title</div>
+        <div className="w-[105px] mr-18.75">Publish Date</div>
+        <div className="w-[130px]">Insights</div>
+      </div>
+      <ul className="flex flex-col gap-5">
         {tasks
           ?.filter((el) => {
             if (!taskStatus.length) return el;
@@ -68,10 +66,10 @@ function Tasks() {
             }
           })
           .map(({ title, status, createdAt, _id }) => (
-            <tr key={_id} className="pb-4 ">
-              <td
+            <li key={_id} className="flex pl-1.75 pr-7.5 text-[#858FA6]">
+              <div
                 onClick={() => setEditId((prev) => (prev === _id ? null : _id))}
-                className={`relative border  inline-block py-1 p-3 min-w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[status].styles || ""}`}
+                className={`relative border self-start text-[12px] mr-[73px]  inline-block py-1 p-3 w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[status].styles || ""}`}
               >
                 {editId === _id && (
                   <div className="absolute py-2 bg-zinc-100 shadow-2xl rounded-lg w-40 top-full left-0 mt-1 z-10">
@@ -95,23 +93,24 @@ function Tasks() {
                   </div>
                 )}
                 {statusConfig[status].text}
-              </td>
-              <td>
+              </div>
+              <p className="flex-1 break-all pr-8.75 self-start underline">
                 <HighlightText text={title} />
-              </td>
-              <td>
+              </p>
+              <div className="w-[105px] mr-12">
                 {new Date(createdAt).toLocaleDateString().replaceAll(".", "-")}
-              </td>
-              <td>
-                <button onClick={() => deleteTask(_id)} className="bg-red-500">
+              </div>
+              <button className="w-[129px] py-3 bg-[#6BC2BB] shadow-sm inset-shadow-[#000000]/30 active:inset-shadow-[#000000]/60 hover:inset-shadow-sm transition-all cursor-pointer mr-6 self-start rounded-[5px] text-white text-[12px] font-bold">
+                Actions
+                {/* <button onClick={() => deleteTask(_id)} className="bg-red-500">
                   -
                 </button>
-                <button>edit</button>
-              </td>
-            </tr>
+                <button>edit</button> */}
+              </button>
+            </li>
           ))}
-      </tbody>
-    </table>
+      </ul>
+    </section>
   );
 }
 
