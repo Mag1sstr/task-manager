@@ -4,11 +4,14 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
+import LanguageContextProvider from "./contexts/LanguageContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <LanguageContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </LanguageContextProvider>
+  </Provider>,
 );
