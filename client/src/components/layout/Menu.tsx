@@ -1,6 +1,102 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useTranslation } from "../../hooks/useTranslation";
 
 function Menu() {
+  const { t, lang } = useTranslation();
+  const TABS = [
+    {
+      name: t[lang].menu.dashboard,
+      path: "/",
+      icon: (
+        <svg
+          width="19"
+          height="19"
+          viewBox="0 0 19 19"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M10.0606 3.31802C9.47491 3.90381 9.47491 4.85356 10.0606 5.43934L12.9393 8.31806C13.5251 8.90386 14.4749 8.90386 15.0607 8.31806L17.9393 5.43934C18.5251 4.85356 18.5251 3.90381 17.9393 3.31802L15.0607 0.439342C14.4749 -0.146447 13.5251 -0.146447 12.9393 0.439342L10.0606 3.31802ZM11.8284 4.37868L14 6.55026L16.1716 4.37868L14 2.2071L11.8284 4.37868Z"
+            fill="#559B95"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M0 2.37891C0 1.27434 0.89543 0.378906 2 0.378906H6C7.1046 0.378906 8 1.27434 8 2.37891V6.37891C8 7.48349 7.1046 8.37889 6 8.37889H2C0.89543 8.37889 0 7.48349 0 6.37891V2.37891ZM2 2.37891H6V6.37891H2V2.37891Z"
+            fill="#559B95"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M2 10.3789C0.89543 10.3789 0 11.2744 0 12.3789V16.3789C0 17.4835 0.89543 18.3789 2 18.3789H6C7.1046 18.3789 8 17.4835 8 16.3789V12.3789C8 11.2744 7.1046 10.3789 6 10.3789H2ZM2 12.3789H6V16.3789H2V12.3789Z"
+            fill="#559B95"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M12 10.3789C10.8954 10.3789 10 11.2744 10 12.3789V16.3789C10 17.4835 10.8954 18.3789 12 18.3789H16C17.1046 18.3789 18 17.4835 18 16.3789V12.3789C18 11.2744 17.1046 10.3789 16 10.3789H12ZM12 12.3789H16V16.3789H12V12.3789Z"
+            fill="#559B95"
+          />
+        </svg>
+      ),
+    },
+    {
+      name: t[lang].menu.profile,
+      path: "/profile",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M10 11.5C11.933 11.5 13.5 9.933 13.5 8C13.5 6.067 11.933 4.5 10 4.5C8.067 4.5 6.5 6.067 6.5 8C6.5 9.933 8.067 11.5 10 11.5ZM10 9.5C10.8284 9.5 11.5 8.8284 11.5 8C11.5 7.17157 10.8284 6.5 10 6.5C9.1716 6.5 8.5 7.17157 8.5 8C8.5 8.8284 9.1716 9.5 10 9.5Z"
+            fill="#559B95"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M15.2112 18.5365C18.0833 16.7794 20 13.6136 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 12.4815 0.90389 14.752 2.4004 16.5C2.4004 16.5 2.40041 16.5 2.4004 16.5C2.77735 16.9403 3.1919 17.3474 3.63907 17.7165C5.36766 19.143 7.58376 20 10 20C11.9093 20 13.6936 19.4649 15.2112 18.5365ZM16.1513 15.1152C17.3057 13.7285 18 11.9453 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 11.9453 2.69434 13.7285 3.84871 15.1152C5.54517 13.7898 7.68034 13 10 13C12.3196 13 14.4548 13.7898 16.1513 15.1152ZM14.665 16.4998C13.3511 15.5548 11.7409 15 10 15C8.2591 15 6.64889 15.5548 5.33501 16.4998C6.57009 17.3878 8.0686 17.9325 9.6908 17.9941C9.7934 17.998 9.8964 18 10 18C10.1208 18 10.241 17.9973 10.3605 17.992C11.963 17.921 13.4429 17.3785 14.665 16.4998Z"
+            fill="#559B95"
+          />
+        </svg>
+      ),
+    },
+    {
+      name: t[lang].menu.help,
+      path: "/help",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.27562 11.5065C8.99832 11.5065 8.76272 11.2794 8.79932 11.0046C8.81962 10.8526 8.85132 10.7447 8.89452 10.5978C8.89562 10.5942 8.89662 10.5905 8.89772 10.5869C8.90532 10.5613 8.91312 10.5344 8.92132 10.5059C9.02042 10.1735 9.16422 9.90508 9.35282 9.70048C9.54142 9.49598 9.76832 9.31058 10.0336 9.14438C10.2317 9.01658 10.4091 8.88388 10.5657 8.74648C10.7223 8.60908 10.8469 8.45728 10.9396 8.29108C11.0323 8.12168 11.0787 7.93311 11.0787 7.72537C11.0787 7.50484 11.0259 7.31148 10.9205 7.14529C10.815 6.9791 10.6728 6.85126 10.4938 6.76177C10.318 6.67228 10.1231 6.62754 9.90892 6.62754C9.70122 6.62754 9.50461 6.67388 9.31931 6.76656C9.13391 6.85605 8.98212 6.99028 8.86382 7.16926C8.82512 7.22675 8.79232 7.28885 8.76521 7.35556C8.66411 7.60488 8.45901 7.82604 8.19001 7.82604H7.22877C6.94773 7.82604 6.7171 7.59326 6.7618 7.3158C6.82869 6.90051 6.96687 6.54325 7.17634 6.24401C7.46717 5.82533 7.8523 5.51372 8.33172 5.30918C8.81112 5.10143 9.34002 4.99756 9.91852 4.99756C10.5545 4.99756 11.117 5.10303 11.606 5.31397C12.095 5.52171 12.4785 5.82374 12.7566 6.22004C13.0346 6.61635 13.1737 7.09416 13.1737 7.65346C13.1737 8.02738 13.1113 8.35978 12.9867 8.65058C12.8652 8.93828 12.6943 9.19398 12.4737 9.41768C12.2532 9.63818 11.9927 9.83798 11.6923 10.0169C11.4398 10.1672 11.2321 10.3238 11.0691 10.4868C10.9093 10.6498 10.7894 10.8383 10.7095 11.0525C10.7037 11.0687 10.6981 11.0851 10.6926 11.1015C10.6167 11.3313 10.4136 11.5065 10.1716 11.5065H9.27562Z"
+            fill="#559B95"
+          />
+          <path
+            d="M9.72186 15.0747C9.40226 15.0747 9.12906 14.9629 8.90216 14.7392C8.67836 14.5122 8.56816 14.2406 8.57136 13.9242C8.56816 13.611 8.67836 13.3425 8.90216 13.1188C9.12906 12.8951 9.40226 12.7832 9.72186 12.7832C10.0256 12.7832 10.2924 12.8951 10.5226 13.1188C10.7527 13.3425 10.8693 13.611 10.8725 13.9242C10.8693 14.1351 10.8134 14.3285 10.7047 14.5043C10.5993 14.6768 10.4602 14.8159 10.2876 14.9213C10.1151 15.0236 9.92646 15.0747 9.72186 15.0747Z"
+            fill="#559B95"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10ZM18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10Z"
+            fill="#559B95"
+          />
+        </svg>
+      ),
+    },
+  ];
   return (
     <aside className="w-[402px] flex flex-col items-center py-10.5 border-r border-[#9EA5B8]/25">
       <Link to={"/"} className="mb-30.75">
@@ -46,42 +142,18 @@ function Menu() {
         </svg>
       </Link>
       <nav className="w-full">
-        <div className="relative p-5 text-[18px] font-bold flex items-center pl-32.5 justify-start leading-[21.6px] transition-all  gap-5.5 hover:bg-[#6BC2BB]/20 text-[#559B95] w-full before:content-[''] overflow-hidden before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1.75 before:bg-[#559B95] before:translate-x-full hover:before:translate-x-0 before:transition-all">
-          <svg
-            width="19"
-            height="19"
-            viewBox="0 0 19 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        {TABS.map((el) => (
+          <NavLink
+            to={el.path}
+            className={({ isActive }) =>
+              `relative p-5 text-[18px] font-bold flex items-center pl-32.5 justify-start leading-[21.6px] transition-all ${isActive ? "bg-[#6BC2BB]/20 text-[#559B95]" : ""}  gap-5.5 hover:bg-[#6BC2BB]/20 text-[#559B95] w-full before:content-[''] overflow-hidden before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1.75 before:bg-[#559B95] before:translate-x-full hover:before:translate-x-0 before:transition-all`
+            }
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M10.0606 3.31802C9.47491 3.90381 9.47491 4.85356 10.0606 5.43934L12.9393 8.31806C13.5251 8.90386 14.4749 8.90386 15.0607 8.31806L17.9393 5.43934C18.5251 4.85356 18.5251 3.90381 17.9393 3.31802L15.0607 0.439342C14.4749 -0.146447 13.5251 -0.146447 12.9393 0.439342L10.0606 3.31802ZM11.8284 4.37868L14 6.55026L16.1716 4.37868L14 2.2071L11.8284 4.37868Z"
-              fill="#559B95"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M0 2.37891C0 1.27434 0.89543 0.378906 2 0.378906H6C7.1046 0.378906 8 1.27434 8 2.37891V6.37891C8 7.48349 7.1046 8.37889 6 8.37889H2C0.89543 8.37889 0 7.48349 0 6.37891V2.37891ZM2 2.37891H6V6.37891H2V2.37891Z"
-              fill="#559B95"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M2 10.3789C0.89543 10.3789 0 11.2744 0 12.3789V16.3789C0 17.4835 0.89543 18.3789 2 18.3789H6C7.1046 18.3789 8 17.4835 8 16.3789V12.3789C8 11.2744 7.1046 10.3789 6 10.3789H2ZM2 12.3789H6V16.3789H2V12.3789Z"
-              fill="#559B95"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M12 10.3789C10.8954 10.3789 10 11.2744 10 12.3789V16.3789C10 17.4835 10.8954 18.3789 12 18.3789H16C17.1046 18.3789 18 17.4835 18 16.3789V12.3789C18 11.2744 17.1046 10.3789 16 10.3789H12ZM12 12.3789H16V16.3789H12V12.3789Z"
-              fill="#559B95"
-            />
-          </svg>
-          Dashboard
-        </div>
-        <div className="relative p-5 text-[18px] font-bold flex items-center pl-32.5 justify-start leading-[21.6px] transition-all  gap-5.5 hover:bg-[#6BC2BB]/20 text-[#559B95] w-full before:content-[''] overflow-hidden before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1.75 before:bg-[#559B95] before:translate-x-full hover:before:translate-x-0 before:transition-all">
+            {el.icon}
+            {el.name}
+          </NavLink>
+        ))}
+        {/* <div className="relative p-5 text-[18px] font-bold flex items-center pl-32.5 justify-start leading-[21.6px] transition-all  gap-5.5 hover:bg-[#6BC2BB]/20 text-[#559B95] w-full before:content-[''] overflow-hidden before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1.75 before:bg-[#559B95] before:translate-x-full hover:before:translate-x-0 before:transition-all">
           <svg
             width="20"
             height="20"
@@ -102,9 +174,9 @@ function Menu() {
               fill="#559B95"
             />
           </svg>
-          Profile
-        </div>
-        <div className="relative p-5 text-[18px] font-bold flex items-center pl-32.5 justify-start leading-[21.6px] transition-all  gap-5.5 hover:bg-[#6BC2BB]/20 text-[#559B95] w-full before:content-[''] overflow-hidden before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1.75 before:bg-[#559B95] before:translate-x-full hover:before:translate-x-0 before:transition-all">
+          {t[lang].menu.profile}
+        </div> */}
+        {/* <div className="relative p-5 text-[18px] font-bold flex items-center pl-32.5 justify-start leading-[21.6px] transition-all  gap-5.5 hover:bg-[#6BC2BB]/20 text-[#559B95] w-full before:content-[''] overflow-hidden before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1.75 before:bg-[#559B95] before:translate-x-full hover:before:translate-x-0 before:transition-all">
           <svg
             width="20"
             height="20"
@@ -127,8 +199,8 @@ function Menu() {
               fill="#559B95"
             />
           </svg>
-          Help
-        </div>
+          {t[lang].menu.help}
+        </div> */}
       </nav>
     </aside>
   );

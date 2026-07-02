@@ -1,0 +1,16 @@
+{
+  "ru": {
+    "menu": {
+      "dashboard": "Панель",
+      "profile": "Профиль",
+      "help": "Помощь"
+    }
+  },
+  "en": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "help": "Help"
+    }
+  }
+}
