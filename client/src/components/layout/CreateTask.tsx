@@ -2,7 +2,6 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import type { ITask } from "../../types";
 import { useCreateTaskMutation } from "../../store/api";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 export type CreateTaskForm = Omit<ITask, "createdAt" | "updatedAt" | "status">;
 
@@ -16,7 +15,7 @@ function CreateTask() {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Добавлено");
+      // toast.success("Добавлено");
     }
   }, [isSuccess]);
   return (
