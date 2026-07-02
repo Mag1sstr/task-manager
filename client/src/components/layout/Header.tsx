@@ -1,6 +1,8 @@
+import { useToast } from "../feature/toast";
 import Profile from "../ui/Profile";
 
 function Header() {
+  const toast = useToast();
   return (
     <header className="flex items-center justify-between mb-5.75">
       <h1 className="text-[18px] font-bold text-[#CED2DB] flex-1">Dashboard</h1>
@@ -45,6 +47,13 @@ function Header() {
         </button>
       </div>
       <Profile />
+      <button
+        onClick={() => {
+          toast.success("Успешно!");
+        }}
+      >
+        toast
+      </button>
     </header>
   );
 }
