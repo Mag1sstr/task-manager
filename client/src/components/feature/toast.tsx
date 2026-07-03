@@ -1,19 +1,25 @@
 import { useContext } from "react";
 import { ToastContext } from "./ToastContainer";
 export const useToast = () => {
-  const { setShowToast, setValue } = useContext(ToastContext);
+  const { setToastData } = useContext(ToastContext);
   const toast = {
     success: (v?: string) => {
-      setShowToast("success");
-      setValue(v ?? "");
+      setToastData((prev) => [
+        ...prev,
+        { id: Date.now(), title: v || "", type: "success" },
+      ]);
     },
     error: (v?: string) => {
-      setShowToast("error");
-      setValue(v ?? "");
+      setToastData((prev) => [
+        ...prev,
+        { id: Date.now(), title: v || "", type: "error" },
+      ]);
     },
     default: (v?: string) => {
-      setShowToast("default");
-      setValue(v ?? "");
+      setToastData((prev) => [
+        ...prev,
+        { id: Date.now(), title: v || "", type: "default" },
+      ]);
     },
   };
   return toast;

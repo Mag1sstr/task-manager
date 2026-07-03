@@ -1,46 +1,47 @@
 import { createContext, useEffect, useState } from "react";
-type ToastType = "success" | "error" | "default";
+import ToastItem from "./ToastItem";
+import { AnimatePresence } from "motion/react";
+export type ToastType = "success" | "error" | "default";
 interface IProps {
   children: React.ReactNode;
   delay?: number;
 }
 export const ToastContext = createContext(
   {} as {
-    showToast: ToastType | null;
-    setShowToast: (type: ToastType | null) => void;
-    setValue: (s: string) => void;
+    toastData: IToastData[];
+    setToastData: (
+      data: IToastData[] | ((prev: IToastData[]) => IToastData[]),
+    ) => void;
   },
 );
+export interface IToastData {
+  type: ToastType;
+  title: string;
+  id: number;
+}
 const ToastContainer = ({ children, delay = 3000 }: IProps) => {
-  const [value, setValue] = useState("");
-  const [showToast, setShowToast] = useState<ToastType | null>(null);
-
-  const styleWithType: Record<ToastType, string> = {
-    default: "border-gray-500",
-    success: "border-green-500",
-    error: "border-red-500",
-  };
-
-  useEffect(() => {
-    if (!showToast) return;
-
-    const timer = setTimeout(() => {
-      setShowToast(null);
-    }, delay);
-    return () => clearTimeout(timer);
-  }, [showToast]);
+  const [toastData, setToastData] = useState<IToastData[]>([]);
+  console.log(toastData);
 
   return (
-    <ToastContext.Provider value={{ setShowToast, showToast, setValue }}>
+    <ToastContext.Provider value={{ toastData, setToastData }}>
       {children}
-
-      {showToast && (
-        <div
-          className={`fixed top-0 right-0 w-70 p-10 z-100 bg-white shadow-2xl border ${styleWithType[showToast]}`}
-        >
-          {value}
-        </div>
-      )}
+      <AnimatePresence>
+        {toastData.length > 0 && (
+          <div
+            className={`fixed top-0 right-0 w-70 p-10 z-100 flex flex-col gap-2.5 `}
+          >
+            {toastData.map((item) => (
+              <ToastItem
+                key={item.id}
+                setToastData={setToastData}
+                {...item}
+                delay={delay}
+              />
+            ))}
+          </div>
+        )}
+      </AnimatePresence>
     </ToastContext.Provider>
   );
 };
