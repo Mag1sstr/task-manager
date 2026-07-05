@@ -11,6 +11,7 @@ function Sort() {
   const sortData: { name: string; type: TSort }[] = [
     { name: "Date", type: "date" },
     { name: "Title length", type: "length" },
+    { name: "Date desc", type: "dateDesc" },
   ];
 
   return (

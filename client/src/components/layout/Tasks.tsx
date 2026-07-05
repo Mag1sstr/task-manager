@@ -11,10 +11,11 @@ import HighlightText from "../ui/HighlightText";
 
 function Tasks() {
   const { searchValue, taskStatus } = useFilters();
-  const { data: tasks } = useGetTasksQuery({
+  const { data: tasks = [] } = useGetTasksQuery({
     title: useDebounce(searchValue),
   });
   const [editId, setEditId] = useState<null | string>(null);
+  const { sortType } = useFilters();
   const [deleteTask] = useDeleteTaskMutation();
   const [updateTask, { isSuccess: isUpdateSuccess }] = useUpdateTaskMutation();
 
@@ -40,6 +41,25 @@ function Tasks() {
       styles: "bg-[#4070F4]/20 border-[#4070F4] text-[#4070F4]",
     },
   };
+
+  const sortingTasks = sortType
+    ? [...tasks].sort((a, b) => {
+        switch (sortType) {
+          case "date":
+            return (
+              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            );
+          case "length":
+            return a.title.length - b.title.length;
+          case "dateDesc":
+            return (
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+          default:
+            return a.title.length - b.title.length;
+        }
+      })
+    : tasks;
   useEffect(() => {
     if (isUpdateSuccess) {
       alert("Статус обновлен");
@@ -56,8 +76,8 @@ function Tasks() {
         <div className="w-[130px]">Insights</div>
       </div>
       <ul className="flex flex-col gap-5">
-        {tasks
-          ?.filter((el) => {
+        {sortingTasks
+          .filter((el) => {
             if (!taskStatus.length) return el;
             for (const item of taskStatus) {
               if (el.status.includes(item)) {

@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { StatusType } from "../../types";
-export type TSort = "date" | "length";
+export type TSort = "date" | "length" | "dateDesc";
 interface FiltersState {
   searchValue: string;
   taskStatus: StatusType[];
