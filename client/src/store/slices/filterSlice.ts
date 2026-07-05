@@ -1,14 +1,16 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { StatusType } from "../../types";
-
+type TSort = "date" | "length" | null;
 interface FiltersState {
   searchValue: string;
   taskStatus: StatusType[];
+  sortType: TSort;
 }
 
 const initialState: FiltersState = {
   searchValue: "",
   taskStatus: [],
+  sortType: null,
 };
 
 export const filterSlice = createSlice({
@@ -27,6 +29,9 @@ export const filterSlice = createSlice({
     deleteStatusType(state, action: PayloadAction<StatusType>) {
       state.taskStatus = state.taskStatus.filter((el) => el !== action.payload);
     },
+    serSortType(state, action: PayloadAction<TSort>) {
+      state.sortType = action.payload;
+    },
   },
 });
 
@@ -35,6 +40,7 @@ export const {
   setStatusType,
   addStatusType,
   deleteStatusType,
+  serSortType,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

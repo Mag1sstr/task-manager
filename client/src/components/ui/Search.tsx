@@ -6,7 +6,7 @@ function Search() {
   const dispatch = useAppDispatch();
   const { searchValue } = useFilters();
   return (
-    <div className="flex gap-8.75 mb-13.25">
+    <div className="flex gap-8.75">
       <div className="max-w-[362px] w-full border border-[#9EA5B8] flex items-center py-3 pl-10 rounded-[37px]">
         <input
           value={searchValue}
