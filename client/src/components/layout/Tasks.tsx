@@ -8,9 +8,12 @@ import {
 } from "../../store/api";
 import type { StatusType } from "../../types";
 import HighlightText from "../ui/HighlightText";
+import { useAppDispatch } from "../../store/store";
+import { setDragItem } from "../../store/slices/filterSlice";
 
 function Tasks() {
-  const { searchValue, taskStatus } = useFilters();
+  const dispatch = useAppDispatch();
+  const { searchValue, taskStatus, dragItem } = useFilters();
   const { data: tasks = [] } = useGetTasksQuery({
     title: useDebounce(searchValue),
   });
@@ -67,6 +70,8 @@ function Tasks() {
     }
   }, [isUpdateSuccess]);
 
+  console.log(dragItem);
+
   return (
     <section className="w-full">
       <div className="flex px-6.25 pb-5 border-b border-[#CED2DB] mb-6">
@@ -85,13 +90,15 @@ function Tasks() {
               }
             }
           })
-          .map(({ title, status, createdAt, _id }) => (
-            <li key={_id} className="flex pl-1.75 pr-7.5 text-[#858FA6]">
+          .map((el) => (
+            <li key={el._id} className="flex pl-1.75 pr-7.5 text-[#858FA6]">
               <div
-                onClick={() => setEditId((prev) => (prev === _id ? null : _id))}
-                className={`relative border self-start text-[12px] mr-[73px]  inline-block py-1 p-3 w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[status].styles || ""}`}
+                onClick={() =>
+                  setEditId((prev) => (prev === el._id ? null : el._id))
+                }
+                className={`relative border self-start text-[12px] mr-[73px]  inline-block py-1 p-3 w-[94px] text-center transition-all cursor-pointer mb-4 rounded-sm ${statusConfig[el.status].styles || ""}`}
               >
-                {editId === _id && (
+                {editId === el._id && (
                   <div className="absolute py-2 bg-zinc-100 shadow-2xl rounded-lg w-40 top-full left-0 mt-1 z-10">
                     <p>Change status:</p>
                     {Object.entries(statusConfig).map(([key, v]) => (
@@ -99,7 +106,7 @@ function Tasks() {
                         key={key}
                         onClick={() => {
                           updateTask({
-                            _id,
+                            _id: el._id,
                             body: {
                               status: key as StatusType,
                             },
@@ -112,20 +119,24 @@ function Tasks() {
                     ))}
                   </div>
                 )}
-                {statusConfig[status].text}
+                {statusConfig[el.status].text}
               </div>
-              <p className="flex-1 break-all pr-8.75 self-start underline">
-                <HighlightText text={title} />
+              <p
+                draggable
+                onDragStart={() => {
+                  dispatch(setDragItem(el));
+                }}
+                className="flex-1 break-all pr-8.75 self-start underline"
+              >
+                <HighlightText text={el.title} />
               </p>
               <div className="w-[105px] mr-12">
-                {new Date(createdAt).toLocaleDateString().replaceAll(".", "-")}
+                {new Date(el.createdAt)
+                  .toLocaleDateString()
+                  .replaceAll(".", "-")}
               </div>
               <button className="w-[129px] py-3 bg-[#6BC2BB] shadow-sm inset-shadow-[#000000]/30 active:inset-shadow-[#000000]/60 hover:inset-shadow-sm transition-all cursor-pointer mr-6 self-start rounded-[5px] text-white text-[12px] font-bold">
                 Actions
-                {/* <button onClick={() => deleteTask(_id)} className="bg-red-500">
-                  -
-                </button>
-                <button>edit</button> */}
               </button>
             </li>
           ))}

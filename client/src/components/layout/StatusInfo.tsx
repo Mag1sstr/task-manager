@@ -3,10 +3,9 @@ import { useGetTasksQuery } from "../../store/api";
 import {
   addStatusType,
   deleteStatusType,
-  setStatusType,
 } from "../../store/slices/filterSlice";
 import { useAppDispatch } from "../../store/store";
-import type { ITask, StatusType } from "../../types";
+import type { StatusType } from "../../types";
 import StatusItem from "./StatusItem";
 
 function StatusInfo() {
@@ -14,20 +13,6 @@ function StatusInfo() {
   const { taskStatus } = useFilters();
   const dispatch = useAppDispatch();
 
-  // const info = (data ?? []).reduce<Record<StatusType, ITask[]>>(
-  //   (acc, el) => {
-  //     const key = el.status;
-  //     acc[key].push(el);
-  //     return acc;
-  //   },
-  //   {
-  //     cancelled: [],
-  //     confirmed: [],
-  //     done: [],
-  //     in_progress: [],
-  //     new: [],
-  //   },
-  // );
   const ICONS: Record<StatusType, { label: string; icon: React.ReactNode }> = {
     cancelled: {
       label: "errors",
@@ -139,11 +124,9 @@ function StatusInfo() {
     },
   );
 
-  console.log(taskStatus);
-
   return (
     <ul className="flex gap-2.5 mb-15">
-      {Object.entries(STATUSED).map(([key, v], i) => {
+      {Object.entries(STATUSED).map(([key, v]) => {
         const isHas = taskStatus.some((el) => el === key);
         return (
           <StatusItem
