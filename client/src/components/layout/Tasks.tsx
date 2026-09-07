@@ -70,8 +70,6 @@ function Tasks() {
     }
   }, [isUpdateSuccess]);
 
-  console.log(dragItem);
-
   return (
     <section className="w-full">
       <div className="flex px-6.25 pb-5 border-b border-[#CED2DB] mb-6">
